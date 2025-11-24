@@ -1,0 +1,27 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "Complete Node.js Guide",
+  "license": "ISC",
+  "author": "AysenurUlku",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon 2_secondModule/app.js",
+    "start1": "nodemon 3_thirdModule/app.js",
+    "start2": "nodemon examples/express.js",
+    "start3": "nodemon 4_fourthModule/app.js",
+    "start-server": "node secondModule/app.js"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  },
+  "dependencies": {
+    "body-parser": "^2.2.0",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-handlebars": "3.0",
+    "pug": "^3.0.3"
+  }
+}
