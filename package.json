@@ -13,6 +13,7 @@
     "start2": "nodemon examples/express.js",
     "start3": "nodemon 4_fourthModule/app.js",
     "start4": "nodemon 5_fifthModule/app.js",
+    "start5": "nodemon 6_sixthModule/app.js",
     "start-server": "node secondModule/app.js"
   },
   "devDependencies": {
