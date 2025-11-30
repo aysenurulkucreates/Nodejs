@@ -1,3 +1,10 @@
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: stretch !important;
+}
+
 .product-form {
     width: 20rem;
     max-width: 90%;
@@ -9,6 +16,9 @@
     width: 20rem;
     max-width: 95%;
     margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .product__title {
@@ -34,4 +44,15 @@
     display: block;
     margin: 0 auto; 
     background-color: #f9f9f9;
+}
+
+.details-card {
+    width: 30rem;   
+    max-width: 90%;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.26);
+    border: 1px solid #e2e2e2;
+    border-radius: 10px;
+    background: white;
 }
