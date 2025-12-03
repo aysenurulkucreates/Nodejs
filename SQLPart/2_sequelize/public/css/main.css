@@ -147,11 +147,11 @@ form {
 
 .card {
   /*box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);*/
-    background-color: rgb(240, 243, 236);
+    background-color: white;
     border: 1px solid #e2e2e2;
     border-radius: 5px;
-    height: 100%; /* Kapsayıcının boyuna uyması için ŞART */
-    display: flex;       /* Kartın içi de düzenli olsun */
+    height: 100%;
+    display: flex; 
     flex-direction: column;
 }
 
