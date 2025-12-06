@@ -13,13 +13,9 @@ exports.postAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    req.user
-    .createProduct({
-        title: title,
-        imageUrl: imageUrl,
-        price: price,
-        description: description
-    })
+    const product = new Product(title, imageUrl, price, description);
+    product
+    .save()
     .then(result => {
         //console.log(result);
         console.log('Created Product');
@@ -30,6 +26,7 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
+/*
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
@@ -108,3 +105,4 @@ exports.postDeleteProduct = (req, res, next) => {
         console.log(err);
     });
 };
+*/
