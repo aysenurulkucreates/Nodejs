@@ -6,7 +6,7 @@ exports.getAddProduct = (req, res, next) => {
         path: '/admin/add-product',
         editing: false
     });
-    };
+};
 
 exports.postAddProduct = (req, res, next) => {
     const title = req.body.title;
@@ -32,7 +32,6 @@ exports.postAddProduct = (req, res, next) => {
     });
 };
 
-
 exports.getEditProduct = (req, res, next) => {
     const editMode = req.query.edit;
     if (!editMode) {
@@ -55,7 +54,7 @@ exports.getEditProduct = (req, res, next) => {
         console.log(err);
     });
     
-    };
+};
 
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
@@ -80,10 +79,12 @@ exports.postEditProduct = (req, res, next) => {
     });
 };
 
-
 exports.getProducts = (req, res, next) => {
     Product.find()
+    //.select('title price -_id')
+    //.populate('userId', 'name')
     .then(products => {
+        console.log(products)
       res.render('admin/products', {
         prods: products, 
         pageTitle: 'Admin Products', 

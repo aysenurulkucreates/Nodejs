@@ -28,7 +28,7 @@ exports.getProduct = (req, res, next) => {
   .catch(err => {
     console.log(err);
   });
-  };
+};
 
 exports.getIndex = (req, res, next) => {
   Product.find()
@@ -57,8 +57,7 @@ exports.getCart = (req, res, next) => {
   .catch(err => {
     console.log(err);
   });
-  }
-
+};
     
 exports.postCart = (req, res, next) => {
   const prodId = req.body.productId;
@@ -73,7 +72,7 @@ exports.postCart = (req, res, next) => {
   .catch(err => {
     console.log(err);
   });
-  }
+};
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
