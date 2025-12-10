@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon 1_firstApp/app.js",
     "start2": "nodemon 2_sequelize/app.js",
-    "start3": "nodemon 3_mongoDb/app.js"
+    "start3": "nodemon 3_mongoDb/app.js",
+    "start4": "nodemon 4_mongoose/app.js"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "ejs": "^3.1.10",
     "express": "^5.1.0",
     "mongodb": "^7.0.0",
+    "mongoose": "^9.0.1",
     "mysql2": "^3.15.3",
     "sequelize": "^6.37.7"
   },
