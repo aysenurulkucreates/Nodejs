@@ -55,5 +55,6 @@ userSchema.methods.removeFromCart = function(productId) {
    });
    this.cart.items = updatedCartItems;
    return this.save();
-}
+};
+
 module.exports = mongoose.model('User', userSchema);
