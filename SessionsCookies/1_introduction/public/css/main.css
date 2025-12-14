@@ -57,9 +57,22 @@ form {
   color: white;
 }
 
+
+.main-header__item button {
+  background: transparent;
+  border: none;
+  font: inherit;
+  cursor: pointer;
+  color: white; 
+  padding: 0;
+}
+
+
 .main-header__item a:hover,
 .main-header__item a:active,
-.main-header__item a.active {
+.main-header__item a.active,
+.main-header__item button:hover,
+.main-header__item button:active {
   color: #ffeb3b;
 }
 
