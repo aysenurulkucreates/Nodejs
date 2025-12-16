@@ -3,30 +3,16 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/user');
 
 exports.getLogin = (req, res, next) => {
-   let message = req.flash('error');
-   if (message.length > 0) {
-    message = message[0];
-   } else {
-    message = null;
-   }
     res.render('auth/login', {
     path: '/login',
-    pageTitle: 'Login',
-    errorMessage: message
+    pageTitle: 'Login'
    });
 };
 
 exports.getSignup = (req, res, next) => {
-   let message = req.flash('error');
-   if (message.length > 0) {
-    message = message[0];
-   } else {
-    message = null;
-   }
     res.render('auth/signup', {
     path: '/signup',
-    pageTitle: 'Signup',
-    errorMessage: message
+    pageTitle: 'Signup'
    });
 };
 
@@ -45,6 +31,7 @@ exports.postLogin = (req, res, next) => {
             if (doMatch) {
              req.session.user = user;
              req.session.isLoggedIn = true;
+             req.flash('success', 'Login Successful');
              return req.session.save(err => {
              console.log(err);
              res.redirect('/');

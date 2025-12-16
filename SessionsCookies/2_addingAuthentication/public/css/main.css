@@ -242,10 +242,24 @@ form {
   text-align: center;
 }
 
+.user_message {
+  margin: auto;
+  width: 20%;
+  padding: 0.3rem;
+  background: #b9c9ff;
+  text-align: center;
+}
+
 .user-message--error {
   border-color: red;
   background: rgb(229, 141, 141);
   color: red;
+}
+
+.user-message--success {
+  border-color: green;
+  background: rgb(152, 247, 147);
+  color: green;
 }
 
 @media (min-width: 768px) {

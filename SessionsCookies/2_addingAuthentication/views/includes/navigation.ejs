@@ -44,6 +44,11 @@
             <% } %>
         </ul>
     </nav>
+<% if (successMessage.length > 0) { %>
+    <div class="user_message user-message--success">
+        <%= successMessage %>
+    </div>
+<% } %>
 </header>
 
 <nav class="mobile-nav">
