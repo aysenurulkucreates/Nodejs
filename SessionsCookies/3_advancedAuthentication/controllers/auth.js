@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const nodemailer = require('nodemailer');
 const sendGridTransport = require('nodemailer-sendgrid-transport');
@@ -95,4 +96,11 @@ exports.postLogout = (req, res, next) => {
         console.log(err);
         res.redirect('/');
     });
+};
+
+exports.getReset = (req, res, next) => {
+    res.render('auth/reset', {
+    path: '/reset',
+    pageTitle: 'Reset Password'
+   });
 };
