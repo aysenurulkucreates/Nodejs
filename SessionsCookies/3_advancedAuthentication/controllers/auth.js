@@ -78,7 +78,7 @@ exports.postSignup = (req, res, next) => {
             res.redirect('/login');
             return transporter.sendMail({
                 to: email,
-                from: 'shop@node-complete.com',
+                from: 'aysenurulku17@gmail.com',
                 subject: 'Signup succeeded!',
                 html: '<h1>You successfully signed up!</h1>'
             });
@@ -120,17 +120,17 @@ exports.postReset = (req, res, next) => {
                 return res.redirect('/reset');
             }
             user.resetToken = token;
-            user.resetTokenExpiration = Date.now + 3600000;
+            user.resetTokenExpiration = Date.now() + 3600000;
             return user.save();
         })
         .then(result => {
             res.redirect('/');
             transporter.sendMail({
                 to: req.body.email,
-                from: 'shop@node-complete.com',
+                from: 'aysenurulku17@gmail.com',
                 subject: 'Password reset!',
                 html: `
-                 <p>You requested a password reset/p>
+                 <p>You requested a password reset</p>
                  <p>Click this <a href="http://localhost:3000/reset/${token}">link</a> to set a new password.</p>
                 `
             });
