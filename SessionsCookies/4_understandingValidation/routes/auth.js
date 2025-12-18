@@ -19,7 +19,7 @@ router.post('/login',
         .isLength({ min: 5 })
         .isAlphanumeric()
         .custom((value, {req}) => {
-            return User.findOne({email: email})
+            return User.findOne({ email: value })
                 .then(user => {
                   return Promise.reject('Invalid email or password.');
         })
@@ -38,7 +38,7 @@ router.post('/signup',
             throw new Error('This email address is forbidden.');
         }
         return true;*/
-        return User.findOne({ email: email })
+        return User.findOne({ email: value })
             .then(userDoc => {
                 if (userDoc) {
                   return Promise.reject('E-Mail exists already, please pick a different one.');       
