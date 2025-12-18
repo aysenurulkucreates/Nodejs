@@ -18,7 +18,12 @@ const transporter = nodemailer.createTransport(sendGridTransport({
 exports.getLogin = (req, res, next) => {
     res.render('auth/login', {
     path: '/login',
-    pageTitle: 'Login'
+    pageTitle: 'Login',
+    validationErrors: [],
+    oldInput: {
+        email: '',
+        password: ''
+    }
    });
 };
 
@@ -50,17 +55,24 @@ exports.postLogin = (req, res, next) => {
         validationErrors: errors.array(),
         oldInput: { 
             email: email, 
-            password: password,
-            confirmPassword: req.body.confirmPassword 
+            password: password
         }
     });
     }
      User.findOne({email: email})
     .then(user => {
         if (!user) {
-            req.flash('error', 'Invalid email or password.');
-            return res.redirect('/login');
-        }
+        return res.status(422).render('auth/login', {
+          path: '/login',
+          pageTitle: 'Login',
+          errorMessage: 'Invalid email or password.',
+          oldInput: {
+            email: email,
+            password: password
+          },
+          validationErrors: [] // Hata dizisini boş gönderiyoruz ki EJS patlamasın
+        });
+      }
         bcrypt
         .compare(password, user.password)
         .then(doMatch => {
@@ -73,10 +85,22 @@ exports.postLogin = (req, res, next) => {
              res.redirect('/');
             });
             }
-            req.flash('error', 'Invalid email or password.');
-            res.redirect('/login');
-        });
+            return res.status(422).render('auth/login', {
+            path: '/login',
+            pageTitle: 'Login',
+            errorMessage: 'Invalid email or password.',
+            oldInput: {
+              email: email,
+              password: password
+            },
+            validationErrors: []
+          });
         })
+        .catch(err => {
+          console.log(err);
+          res.redirect('/login');
+        });
+    })
     .catch(err => console.log(err));
 };
 
@@ -94,8 +118,8 @@ exports.postSignup = (req, res, next) => {
           errorMessage: errors.array()[0].msg,
           validationErrors: errors.array(),
           oldInput: { 
-            email: req.body.email, 
-            password: req.body.password 
+            email: email, 
+            password: password 
         }
    });
     }
