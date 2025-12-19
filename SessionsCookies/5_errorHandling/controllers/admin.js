@@ -26,7 +26,7 @@ exports.postAddProduct = (req, res, next) => {
         .status(422)
         .render('admin/edit-product', {
         pageTitle: 'Add-Product', 
-        path: '/admin/edit-product',
+        path: '/admin/add-product',
         editing: false,
         hasError: true,
         product: {
@@ -35,8 +35,8 @@ exports.postAddProduct = (req, res, next) => {
             price: price,
             description: description
         },
-        errorMessage: errors.array()[0].msg,
-        validationErrors: errors.array()
+        errorMessage: 'Dtabase operation failed, please try again.',
+        validationErrors: []
     });
     }
 
@@ -54,8 +54,8 @@ exports.postAddProduct = (req, res, next) => {
         res.redirect('/admin/products');
     })
     .catch(err => {
-        console.log(err);
-    });
+       res.redirect('/500');
+        });
 };
 
 exports.getEditProduct = (req, res, next) => {
