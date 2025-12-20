@@ -9,7 +9,8 @@
     "start2": "nodemon 2_addingAuthentication/app.js",
     "start3": "nodemon 3_advancedAuthentication/app.js",
     "start4": "nodemon 4_understandingValidation/app.js",
-    "start5": "nodemon 5_errorHandling/app.js"
+    "start5": "nodemon 5_errorHandling/app.js",
+    "start6": "nodemon 6_fileUploadAndDownland/app.js"
   },
   "keywords": [],
   "author": "",
