@@ -19,7 +19,24 @@ exports.postAddProduct = (req, res, next) => {
     const image = req.file;
     const price = req.body.price;
     const description = req.body.description;
-    console.log(image);
+    if (!image) {
+        return res
+        .status(422)
+        .render('admin/edit-product', {
+        pageTitle: 'Add-Product', 
+        path: '/admin/add-product',
+        editing: false,
+        hasError: true,
+        product: {
+            title: title,
+            price: price,
+            description: description
+        },
+        errorMessage: 'Attached file is not an image!',
+        validationErrors: []
+    });
+    }
+
 
     const errors = validationResult(req);
 
@@ -42,10 +59,13 @@ exports.postAddProduct = (req, res, next) => {
     });
     }
 
+    // 'images/' klasör ismini elle koyuyoruz + dosyanın sadece adını ekliyoruz.
+    const imageUrl = 'images/' + image.filename;
+
     const product = new Product({
        // _id: new mongoose.Types.ObjectId('693ee3d2d680673aa571020d'),
         title: title,
-        image: image,
+        imageUrl: imageUrl,
         price: price,
         description: description,
         userId: req.user
@@ -98,7 +118,7 @@ exports.getEditProduct = (req, res, next) => {
 exports.postEditProduct = (req, res, next) => {
     const prodId = req.body.productId;
     const updatedTitle = req.body.title;
-    const updatedimage = req.body.image;
+    const image = req.file;
     const updatedPrice = req.body.price;
     const updatedDesc = req.body.description;
     const errors = validationResult(req);
@@ -113,7 +133,6 @@ exports.postEditProduct = (req, res, next) => {
         hasError: true,
         product: {
             title: updatedTitle,
-            image: updatedimage,
             price: updatedPrice,
             description: updatedDesc,
             _id: prodId
@@ -132,7 +151,9 @@ exports.postEditProduct = (req, res, next) => {
             return res.redirect('/');
         }
         product.title = updatedTitle;
-        product.image = updatedimage;
+        if (image) {
+           product.imageUrl = 'images/' + image.filename;;
+        }
         product.price = updatedPrice;
         product.description = updatedDesc;
         return product

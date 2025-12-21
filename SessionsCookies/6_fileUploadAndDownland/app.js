@@ -23,14 +23,28 @@ const store = new MongoDBStore({
 
 const csrfProtection = csrf();
 
+
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, 'images');
+        cb(null, path.join(__dirname, 'images'));
     },
     filename: (req, file, cb) => {
-        cb(null, new Date().toISOString() + '-' + file.originalname);
+        const cleanFileName = file.originalname.replace(/\s+/g, '-');
+        cb(null, new Date().toISOString().replace(/:/g, '-') + '-' + cleanFileName);
     }
 }); 
+
+const fileFilter = (req, file, cb) => {
+    if (
+        file.mimetype === 'image/png' || 
+        file.mimetype === 'image/jpg' || 
+        file.mimetype === 'image/jpeg'
+    ) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+}
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -39,15 +53,18 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(multer({storage: fileStorage}).single('image'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
+
 app.use(session({
     secret: 'my secret',
     resave: false,
     saveUninitialized: false,
     store: store
 }));
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(multer({ storage: fileStorage, fileFilter: fileFilter }).single('image'));
 app.use(csrfProtection);
 app.use(flash());
 
@@ -88,6 +105,7 @@ app.get('/500', errorController.get500Page);
 app.use(errorController.get404Page);
 
 app.use((error, req, res, next) => {
+    console.log(error);
     // res.status(error.httpStatusCode).render(...);
     // res.redirect('/500');
      res.status(500).render('500', {
