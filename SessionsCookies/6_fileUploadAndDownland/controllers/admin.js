@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const path = require('path');
 
 const mongoose = require('mongoose');
 const fileHelper = require('../util/file');
@@ -200,7 +201,8 @@ exports.postDeleteProduct = (req, res, next) => {
         if (!product) {
             return next(new Error('Product not found.'));
         }
-        fileHelper.deleteFile(product.imageUrl);
+        //console.log('SİLİNECEK DOSYA YOLU:', product.imageUrl);
+        fileHelper.deleteFile(path.join(__dirname, '..', product.imageUrl));
         return Product.deleteOne({_id: prodId, userId: req.user._id});
     })
     .then(() => {
