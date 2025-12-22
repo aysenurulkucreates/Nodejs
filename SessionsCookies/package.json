@@ -12,7 +12,8 @@
     "start5": "nodemon 5_errorHandling/app.js",
     "start6": "nodemon 6_fileUploadAndDownland/app.js",
     "start7": "nodemon 7_addingPagination/app.js",
-    "start8": "npx kill-port 3000 && nodemon 8_understandingAsyncRequest/app.js"
+    "start8": "npx kill-port 3000 && nodemon 8_understandingAsyncRequest/app.js",
+    "start9": "nodemon 9_addingPayment/app.js"
   },
   "keywords": [],
   "author": "",
