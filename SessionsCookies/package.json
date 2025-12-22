@@ -5,14 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon 1_introduction/app.js",
+    "start1": "nodemon 1_introduction/app.js",
     "start2": "nodemon 2_addingAuthentication/app.js",
     "start3": "nodemon 3_advancedAuthentication/app.js",
     "start4": "nodemon 4_understandingValidation/app.js",
     "start5": "nodemon 5_errorHandling/app.js",
     "start6": "nodemon 6_fileUploadAndDownland/app.js",
     "start7": "nodemon 7_addingPagination/app.js",
-    "start8": "nodemon 8_understandingAsyncRequest/app.js"
+    "start8": "npx kill-port 3000 && nodemon 8_understandingAsyncRequest/app.js"
   },
   "keywords": [],
   "author": "",
