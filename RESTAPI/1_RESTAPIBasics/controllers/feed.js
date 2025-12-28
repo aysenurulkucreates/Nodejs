@@ -112,12 +112,9 @@ exports.updatePost = (req, res, next) => {
     const title = req.body.title;
     const content = req.body.content;
 
-    // DÜZELTME 1: req.body.imageUrl yerine req.body.image yaptık (Terminal çıktına göre)
     let imageUrl = req.body.image;
 
     if (req.file) {
-        // DÜZELTME 2: Başındaki 'const' kelimesini sildik.
-        // Artık yukarıdaki 'let imageUrl' değişkenini güncelliyor.
         imageUrl = 'images/' + req.file.filename.replace("\\" ,"/");
     }
 
@@ -132,6 +129,11 @@ exports.updatePost = (req, res, next) => {
         if (!post) {
             const error = new Error('Could not find post.');
             error.statusCode = 404;
+            throw error;
+        }
+        if (post.creator.toString() !== req.userId) {
+            const error = new Error('Not authorized.');
+            error.statusCode = 403;
             throw error;
         }
         if (imageUrl !== post.imageUrl) {
@@ -160,6 +162,11 @@ exports.deletePost = (req, res, next) => {
         if (!post) {
             const error = new Error('Could not find post.');
             error.statusCode = 404;
+            throw error;
+        }
+        if (post.creator.toString() !== req.userId) {
+            const error = new Error('Not authorized.');
+            error.statusCode = 403;
             throw error;
         }
         // check logged in user
