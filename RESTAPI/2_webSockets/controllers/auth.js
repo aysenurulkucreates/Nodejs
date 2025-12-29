@@ -43,7 +43,7 @@ exports.login = async (req, res, next) => {
                 error.statusCode = 401;
                 throw error;
             }
-    const isEqual = await  bcrypt.compare(password, user.password);
+    const isEqual = await  bcrypt.compare(password, loadedUser.password);
             if (!isEqual) {
                 const error = new Error('Wrong password!');
                 error.statusCode = 401;
