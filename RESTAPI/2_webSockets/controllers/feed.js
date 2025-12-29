@@ -162,12 +162,13 @@ exports.deletePost = async (req, res, next) => {
             throw error;
         }
         // check logged in user
-      await clearImage(post.imageUrl);
+      clearImage(post.imageUrl);
       await Post.findByIdAndDelete(postId);
-       const user = await User.findById(req.userId);
-       user.posts.pull(postId);
+      const user = await User.findById(req.userId);
+      user.posts.pull(postId);
       await user.save();
-       res.status(200).json({ message: 'Deleted post.'})
+      io.getIO().emit('posts', {action: 'delete', post: postId });
+      res.status(200).json({ message: 'Deleted post.'})
     } catch (err) {
         if (!err.statusCode) {
             err.statusCode = 500;
