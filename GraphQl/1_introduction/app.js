@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 
@@ -16,6 +17,17 @@ const auth = require('./middleware/auth');
 
 
 const app = express();
+
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE, PATCH');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') {
+        return res.sendStatus(200);
+    }
+    next();
+});
+
 
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -38,22 +50,28 @@ const fileFilter = (req, file, cb) => {
     }
 }
 
-app.use(bodyParser.json());   // buna alternatif app.use(bodyParser.urlencoded());
+app.use(bodyParser.json({ limit: '50mb' }));// buna alternatif app.use(bodyParser.urlencoded());
 app.use(
     multer({storage: fileStorage, fileFilter: fileFilter}).single('image'));
 app.use('/images', express.static(path.join(__dirname, 'images')));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET, POST, PUT, DELETE, PATCH');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-    if (req.method === 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next();
-});
-
 app.use(auth);
+
+app.put('/post-image', (req, res, next) => {
+    if (!req.isAuth) {
+        throw new Error('Not authenticated');
+    }
+    if (!req.file) {
+        return res.status(200).json({ message: 'No file provided!'});
+    }
+    if (req.body.oldPath) {
+        clearImage(req.body.oldPath);
+    }
+    return res 
+    .status(201)
+    .json({ message: 'File stored.', filePath: 'images/' + req.file.filename });
+})
+
 
 app.use('/graphql', graphqlHTTP({
     schema: graphqlSchema,
@@ -86,3 +104,8 @@ mongoose
 .catch(err => {
     console.log(err);
 });
+
+const clearImage = filePath => {
+    filePath = path.join(__dirname, filePath);
+    fs.unlink(filePath, err => console.log(err));
+};
