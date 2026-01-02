@@ -39,33 +39,38 @@ class App extends Component {
       new Date(expiryDate).getTime() - new Date().getTime();
     this.setState({ isAuth: true, token: token, userId: userId });
     this.setAutoLogout(remainingMilliseconds);
-  }
+}
 
   mobileNavHandler = isOpen => {
     this.setState({ showMobileNav: isOpen, showBackdrop: isOpen });
-  };
+};
 
   backdropClickHandler = () => {
     this.setState({ showBackdrop: false, showMobileNav: false, error: null });
-  };
+};
 
   logoutHandler = () => {
     this.setState({ isAuth: false, token: null });
     localStorage.removeItem('token');
     localStorage.removeItem('expiryDate');
     localStorage.removeItem('userId');
-  };
+};
 
   loginHandler = (event, authData) => {
     event.preventDefault();
      const graphqlQuery = {
       query: `
-      { login ( email: "${authData.email}", password: "${authData.password}" ) {
+       query UserLogin($email: String!, $password: String!) { 
+       login ( email: $email, password: $password ) {
         token
         userId
         }
       }
-      `
+      `,
+      variables: {
+        email: authData.email,
+        password: authData.password
+      }
     };
     this.setState({ authLoading: true });
     fetch('http://localhost:8080/graphql', {
@@ -112,7 +117,7 @@ class App extends Component {
           error: err
         });
       });
-  };
+};
 
   signupHandler = (event, authData) => {
     event.preventDefault();
@@ -121,17 +126,22 @@ class App extends Component {
     // Düzeltme 1: q harfi g yapıldı.
     const graphqlQuery = {
       query: `
-        mutation {
+        mutation CreateNewUser($email: String!, $name: String!, $password: String!) {
           createUser(userInput: {
-            email: "${authData.signupForm.email.value}",
-            name: "${authData.signupForm.name.value}",  
-            password: "${authData.signupForm.password.value}"
+            email: $email,
+            name: $name,  
+            password: $password
           }) {
             _id
             email
           }
         }
-      `
+      `,
+      variables: {
+        email: authData.signupForm.email.value,
+        name: authData.signupForm.name.value,
+        password: authData.signupForm.password.value
+      }
     };
 
     fetch('http://localhost:8080/graphql', {
@@ -167,15 +177,16 @@ class App extends Component {
       });
     });
 };
+
   setAutoLogout = milliseconds => {
     setTimeout(() => {
       this.logoutHandler();
     }, milliseconds);
-  };
+};
 
   errorHandler = () => {
     this.setState({ error: null });
-  };
+};
 
   render() {
     let routes = (
@@ -258,7 +269,7 @@ class App extends Component {
         {routes}
       </Fragment>
     );
-  }
+};
 }
 
 export default withRouter(App);
