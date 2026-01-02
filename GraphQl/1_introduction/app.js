@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 
@@ -14,6 +13,7 @@ const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
 const schema = require('./graphql/schema');
 const auth = require('./middleware/auth');
+const { clearImage } = require('./util/file');
 
 
 const app = express();
@@ -105,7 +105,4 @@ mongoose
     console.log(err);
 });
 
-const clearImage = filePath => {
-    filePath = path.join(__dirname, filePath);
-    fs.unlink(filePath, err => console.log(err));
-};
+
