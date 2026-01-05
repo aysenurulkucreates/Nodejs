@@ -31,6 +31,7 @@ exports.signup = async (req, res, next) => {
     }
     next(err);
   }
+  
 };
 
 exports.login = async (req, res, next) => {
@@ -66,6 +67,7 @@ exports.login = async (req, res, next) => {
     }
     next(err);
   }
+  return;
 };
 
 exports.getUserStatus = async (req, res, next) => {
