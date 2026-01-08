@@ -4,8 +4,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const body_parser_1 = __importDefault(require("body-parser"));
-const app = (0, express_1.default)();
-app.use(body_parser_1.default.json());
-app.listen({ port: 3000 });
-//# sourceMappingURL=app.js.map
+const todos = [];
+const router = express_1.default.Router();
+router.get("/", (req, res, next) => {
+    res.status(200).json({ todos: todos });
+});
+exports.default = router;
+//# sourceMappingURL=todos.js.map
