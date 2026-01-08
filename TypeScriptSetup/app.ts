@@ -7,4 +7,6 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.listen({ port: 3000 });
+app.use(todosRoutes);
+
+app.listen(3000);
