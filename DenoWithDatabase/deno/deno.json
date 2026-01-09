@@ -1,5 +1,7 @@
 {
   "imports": {
-    "@oak/oak": "jsr:@oak/oak@^17.2.0"
+    "@db/mongo": "jsr:@db/mongo@^0.34.0",
+    "@oak/oak": "jsr:@oak/oak@^17.2.0",
+    "@std/dotenv": "jsr:@std/dotenv@^0.225.6"
   }
 }

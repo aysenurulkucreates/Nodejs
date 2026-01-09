@@ -1,10 +1,10 @@
-import { Application } from "@oak/oak";
+import { Application, Context, Next } from "@oak/oak";
 
 import todosRoutes from "./routes/todos.ts";
 
 const app = new Application();
 
-app.use(async (ctx, next) => {
+app.use(async (ctx: Context, next: Next) => {
   // 1. "Kimler gelebilir?" -> "*" demek "Herkes gelebilir" demektir.
   ctx.response.headers.set("Access-Control-Allow-Origin", "*");
 
