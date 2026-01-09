@@ -1,6 +1,11 @@
-const fs = require("fs").promises;
-const text = "This is a test - and it should be stored in a file!";
+/*burası Deno.serve((_req) => {
+  return new Response("Hello World, my server is running!");
+}); buna eşdeğer, aşağıdakiler uzun hali
+const http = require("http");
 
-fs.writeFile("node-message.txt", text).then(() => {
-  console.log("Wrote file!");
+const server = http.createServer((req, res) => {
+  res.end("Hello World (from Node!");
 });
+
+server.listen(8000);
+*/
